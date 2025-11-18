@@ -1,0 +1,57 @@
+@import url('./general-sans.css');
+@import url('./loader.css');
+*,
+*::after,
+*::before{
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+  text-decoration: none;
+  font-family: GeneralSans-Regular;
+  color: var(--main-text);
+  -ms-overflow-style: none;
+  scrollbar-width: none; 
+  cursor: default;
+
+  user-select: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+}
+*::-webkit-scrollbar {
+  display: none;
+}
+
+h1, h2, h3, h4, h5, h6, p, span{
+  padding: 0;
+  margin: 0;
+  pointer-events: none;
+}
+html{
+  height: 100%;
+  width: 100%;
+  scroll-behavior: smooth;
+}
+body{
+  height: 100%;
+  width: 100%;
+  font-family: GeneralSans-Regular;
+  display: flex;
+  flex-direction: column;
+  overflow-y: hidden;
+}
+main{
+  height: 100%;
+  width: 100%;
+  position: relative;
+  overflow-y: scroll;
+}
+
+@media (min-width: 768px){
+  main{
+    padding-top: 0;
+    ppadding-left: 80px;
+    
+  }
+}
