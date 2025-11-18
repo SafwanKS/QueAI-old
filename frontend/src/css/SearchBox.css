@@ -1,97 +1,47 @@
+.searchBoxContainer{
+  width: 100%;
+  padding: 0 15px;
+  position: relative;
+  bottom: 90px;
+  right: 0;
+  display: flex;
+  justify-content: center;
+  ddisplay: none;
+}
 
+@media (min-width: 768px){
+  .searchBoxContainer{
+    width: calc(100% - 90px);
+    left: 90px;
+    bottom: 20px;
+  }
+}
 
 .searchBox{
-  width: 90%;
-  height: 110px;
-  max-height: unset;
-  max-width: 600px;
-  display: flex;  
+  width: 100%;
+  max-width: 700px;
+  display: flex;
   flex-direction: column;
   gap: 20px;
   align-items: center;
-  border-radius: 30px;
+  background: var(--search-bg);
+  border-radius: 20px;
   padding: 10px;
+  margin-top: 0px;
+  transition: border-radius 0.2s ease-in-out;
   position: relative;
-  margin: 0 10px;
-  transition: height 0.3s ease, flex-direction 0.3s ease;
-  background: rgba(255, 255, 255, 0.05);
-  backdrop-filter: blur(200px);
+  left: 0;
+  bottom: 0;
 }
 
-.searchBox.toolmode{
-  height: 120px;
-}
-
-
-.searchBox.active::after, .searchBox.active::before{
-  content: "";
-  position: absolute;
-  height: 105%;
-  width: 101%;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  border-radius: 50px;
-  background-image: conic-gradient(from var(--angle), transparent 50%, blue);
-  z-index: -1;
-  animation: spinBox 3s linear infinite;
-}
-
-.searchBox.red.active::after, .searchBox.red.active::before{
-  background-image: conic-gradient(from var(--angle), transparent 50%,  rgb(255, 0, 0));
-}
-
-.searchBox.blue.active::after, .searchBox.blue.active::before{
-  background-image: conic-gradient(from var(--angle), transparent 50%,  rgb(0, 60, 255));
-}
-
-.searchBox.green.active::after, .searchBox.green.active::before{
-  background-image: conic-gradient(from var(--angle), transparent 50%,  rgb(0, 255, 21));
-}
-
-.searchBox.purple.active::after, .searchBox.purple.active::before{
-  background-image: conic-gradient(from var(--angle), transparent 50%,  rgb(89, 0, 255));
-}
-
-.searchBox.yellow.active::after, .searchBox.yellow.active::before{
-  background-image: conic-gradient(from var(--angle), transparent 50%,  rgb(255, 153, 0));
-}
-
-.searchBox.active::after{
-  filter: blur(10px);
-  opacity: 1;
-}
-
-.searchBox .chipContainer{
-  flex: 1;
-  animation: fadein 0.2s ease;
-  height: 40px;
-  
-}
-
-@keyframes fadein {
-  from{
-    opacity: 0;
-  }
-  to{
-    opacity: 1;
-  }
-}
-
-.searchBox.active .chipContainer{
-  display: none;
-}
-
-
-.searchBox.onsearch{
+.search .searchBox{
   position: fixed;
   left: 50%;
-  bottom: 15px;
+  bottom: 10px;
   transform: translateX(-50%);
   width: 90%;
-  z-index: 100000;
-  background-color: var(--dialog-bg);
 }
+
 
 
 .searchBoxInputContainer{
@@ -100,70 +50,8 @@
   display: flex;
   align-items: center;
 }
-
-.searchBox.toolmode .searchBoxInputContainer{
-  padding-top: 0 !important;
-}
-
-
-.searchBoxInputContainer .searchTool{
-  display: flex;
-  align-items: center;
-  gap: 5px;
-  background-color: rgba(255, 255, 255, 0.05);
-  backdrop-filter: blur(10px);
-  border-radius: 30px;
-  padding: 10px 15px;
-  position: relative;
-}
-
-.searchBoxInputContainer .searchTool span{
-  font-size: 1em;
-}
-
-.searchBoxInputContainer .searchTool span.draw{
-  color: rgb(247, 53, 53);
-}
-
-.searchBoxInputContainer .searchTool span.code{
-  color: rgb(45, 250, 62);
-}
-
-.searchBoxInputContainer .searchTool span.summarise{
-  color: rgb(53, 98, 247);
-}
-
-.searchBoxInputContainer .searchTool span.story{
-  color: rgb(121, 53, 247);
-}
-
-.searchBoxInputContainer .searchTool span.learn{
-  color: rgb(247, 170, 53);
-}
-
-
-.searchBoxInputContainer .searchTool p{
-  text-transform: capitalize;
-}
-
-.searchBoxInputContainer .searchTool .close-btn{
-  height: 20px;
-  width: 20px;
-  position: absolute;
-  top: -10px;
-  right: 0;
-  background-color: rgba(255, 255, 255, 0.05);
-  backdrop-filter: blur(10px);
-}
-
-
-.searchBoxInputContainer .searchTool .close-btn span{
-  color: white;
-}
-
 .searchBoxButtonContainer{
   width:100%;
-  display: flex;
 }
 @media (min-width: 768px){
   .searchBox{
@@ -198,47 +86,3 @@
 .searchBox .smallBtn{
   background: rgba(40,57,70,1);
 }
-
-.searchBox.active{
-  flex-direction: row;
-  align-items: center;
-  height: 70px;
-  border-radius: 50px;
-  background: var(--dialog-bg);
-  transition: height 0.3s ease;
-  backdrop-filter: none;
-}
-
-
-.searchBox.active .searchBoxInputContainer{
-  flex: 1;
-  align-items: center;
-  padding-top: 0;
-}
-
-.searchBox.active .searchBoxButtonContainer{
-  width: auto;
-}
-
-
-.searchBox .sendBtn{
-  position: absolute;
-  bottom: 10px;
-  right: 10px;
-
-  background-color: rgba(255, 255, 255, 0.05) ;
-  backdrop-filter: blur(10px);
-}
-
-.searchBox.active .sendBtn{
-  bottom: 15px;
-}
-
-
-
-
-.searchBox.onsearch .chip{
-  background:  #272e45;;
-}
-
-

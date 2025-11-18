@@ -1,8 +1,7 @@
 import {
   useState,
   useRef,
-  useEffect,
-  forwardRef
+  useEffect
 } from 'react'
 import {
   useNavigate
@@ -12,27 +11,10 @@ import SmallBtn from "./SmallBtn.jsx"
 import Dialog from '../components/Dialog.jsx'
 import SelectionChip from '../components/SelectionChip.jsx'
 
-
-const SearchBox = forwardRef(({
-  handleInputChange,
-  handleButtonClick,
-  onKeyDown,
-  placeHolder,
-  value,
-  answering = false,
-  focus = false,
-  onLangChanged,
-  inputRef,
-  btnState,
-  animactive = false,
-  setAnimactive,
-  responseRef,
-  onLang,
-  toolMode,
-  toolName, 
-  setToolMode
-}, ref) => {
+export default function SearchBox(props) {
   const navigate = useNavigate()
+  const [btnState,
+    setBtnState] = useState(false)
   const [rows,
     setRows] = useState(1)
   const [showDialogBox,
@@ -144,6 +126,9 @@ const SearchBox = forwardRef(({
     "Zulu"
   ]
     
+
+    
+    
   const ifCancel = (dType) => {
     if (dType === 'lang') {
       setShowDialogBox(false)
@@ -161,8 +146,6 @@ const SearchBox = forwardRef(({
   const ifConfirm = (dType) => {
     if (dType === 'lang') {
       setSearchLang(tempSearchLang)
-      const handleLang = onLangChanged
-      handleLang(tempSearchLang)
       setShowDialogBox(false)
       setTimeout(()=> {
         setShowLangDialog(false)
@@ -177,6 +160,8 @@ const SearchBox = forwardRef(({
 
   }
     
+    
+    
   const showDialog = (d) => {
     if (d === 'lang')
       setShowLangDialog(true)
@@ -184,19 +169,27 @@ const SearchBox = forwardRef(({
       setShowTypeDialog(true)
   }
   
+  
+  
+  
+
   const inputBoxRef = useRef(null)
   const searchBoxRef = useRef(null)
   
-  // const handleInputChange = (event) => {
-  //   props.onChange(event)
-  //   const inputBox = inputBoxRef.current
-  //   const searchBox = searchBoxRef.current
-  //   inputBox.rows = inputBox.value.split('\n').length;
-  //   inputBox.style.height = 'auto';
-  //   inputBox.style.height = inputBox.scrollHeight + 'px';
-  //   setBtnState(inputBox.value.length > 0)
+  useEffect(()=>{
+    if(props.focus) inputBoxRef.current.focus()
+  }, [])
+  
+  const handleInputChange = (event) => {
+    props.onChange(event)
+    const inputBox = inputBoxRef.current
+    const searchBox = searchBoxRef.current
+    inputBox.rows = inputBox.value.split('\n').length;
+    inputBox.style.height = 'auto';
+    inputBox.style.height = inputBox.scrollHeight + 'px';
+    setBtnState(inputBox.value.length > 0)
     
-  // }
+  }
   
 
  /* const handleBtnClick = () => { 
@@ -244,77 +237,62 @@ const SearchBox = forwardRef(({
             }
           </ul>
         </Dialog>
-    }
-    
-    
-    <div className={`searchBox ${toolMode && "toolmode"} ${toolMode && (toolName == "draw" && "red" || toolName == "code" && "green" || toolName == "summarise" && "blue" || toolName == "story" && "purple" || toolName == "learn" && "yellow" )} ${animactive && "active"}`} ref={ref} onClick={()=> inputRef.current.focus()}>
-      <div className='searchBoxInputContainer'>
-        {
-          toolMode &&
-          <div className="searchTool">
-            <span className={`${toolName} material-symbols-outlined`}>{toolName == "draw" && "draw" || toolName == "code" && "code" || toolName == "summarise" && "assignment" || toolName == "story" && "ink_pen" || toolName == "learn" && "book_2" }</span>
-            <p>{toolName}</p>
-            <div className="close-btn" onClick={()=> setToolMode(false)}>
-              <span className="material-symbols-outlined">close</span>
-            </div>
-        </div>
         }
-        
+    
+    
+    <div className="searchBox" ref={searchBoxRef}>
+      <div className='searchBoxInputContainer'>
         <textarea
           type="text"
           rows="1"
-          placeholder={placeHolder}
+          placeholder={props.placeHolder}
           id="promptText"
-          ref={inputRef}
-          onFocus={()=> {
-            if(!toolMode) setAnimactive(false)  
-          }}
+          ref={inputBoxRef}
           onChange={handleInputChange}
-          value={value}
+          value={props.value}
+
           onKeyDown={e => {
             if (e.key === "Enter" && !e.ctrlKey) {
               e.preventDefault();
-              !answering && onKeyDown();
+              props.onKeyDown();
             }
             if (e.key === "Enter" && e.ctrlKey) {
               // Action for Ct
             }
           }}
+          
           />
+        
       </div>
       <div className='searchBoxButtonContainer'>
-        {
-          !animactive &&
-
-          <div className='chipContainer'>
-            <SelectionChip
+        <div className='chipContainer'>
+          
+          <SelectionChip
                 onClick={()=> {
                   showDialog('type')
                   setShowDialogBox(true)
                 }} 
                 icon={'bolt'}
                 body={searchMode} />
-            <SelectionChip
+              <SelectionChip
                 onClick={()=> {
                   showDialog('lang')
                   setShowDialogBox(true)
                 }}
                 icon={'language'}
                 body={searchLang} />
-            <span className='blank' />
-          </div>
-        }
-        
+          
+          
+          
+          <span className='blank' />
         <SmallBtn
-          className={"sendBtn"}
-          state={btnState && !answering ? "active": "inactive"}
+          state={btnState == true ? "active": "inactive"}
           icon={"arrow_upward"}
-          onClick={handleButtonClick}
+          onClick={props.onBtnClick}
           />
+        </div>
       </div>
     </div>
     </>
   )
-})
-
-export default SearchBox
+}
