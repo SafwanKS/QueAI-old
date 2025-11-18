@@ -1,14 +1,6 @@
 .link{
   flex: 1;
 }
-
-@media (min-width: 768px){
-  .link{
-    flex: 0;
-    aspect-ratio: 1/1;
-  }
-}
-
 .navitem{
   height: 100%;
   display: flex;
@@ -34,7 +26,6 @@
 
 .navitem.active p{
   color: #738ee6;
-  font-weight: 800;
 }
 
 .navitem p{
